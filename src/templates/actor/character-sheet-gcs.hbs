@@ -1,0 +1,359 @@
+<form class="{{cssClass}} character-sheet" autocomplete="off">
+    <div id="sheet" style="grid-template:{{block_layout}};">
+        <div id="personal">
+            <div id="portrait">
+                <div class="header">{{localize "gurps.sheet.portrait.title"}}</div>
+                <div class="portrait" style="background-image: url({{actor.img}});">
+                    <img class="portrait" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
+                </div>
+            </div>
+            <div id="identity">
+                <div class="header">{{localize "gurps.sheet.identity.title"}}</div>
+                <div class="fieldblock">
+                    <div class="label">{{localize "gurps.sheet.identity.name"}}</div>
+                    <div class="field"><input name="name" type="text" value="{{actor.name}}"/></div>
+                    <div class="label">{{localize "gurps.sheet.identity.character_title"}}</div>
+                    <div class="field"><input name="data.profile.title" type="text" value="{{data.profile.title}}"/></div>
+                    <div class="label">{{localize "gurps.sheet.identity.player_name"}}</div>
+                    <div class="field"><input name="data.profile.player_name" type="text" value="{{data.profile.player_name}}"/></div>
+                </div>
+            </div>
+            <div id="miscellaneous">
+                <div class="header">{{localize "gurps.sheet.miscellaneous.title"}}</div>
+                <div class="fieldblock">
+                    <div class="label">{{localize "gurps.sheet.miscellaneous.created_date"}}</div>
+                    <div class="field">{{data.created_date}}</div>
+                    <div class="label">{{localize "gurps.sheet.miscellaneous.modified_date"}}</div>
+                    <div class="field">{{data.modified_date}}</div>
+                    <div class="label">{{localize "gurps.sheet.miscellaneous.options"}}</div>
+                    <div class="field">NOT YET IMPLEMENTED</div>
+                </div>
+            </div>
+            <div id="description">
+                <div class="header">{{localize "gurps.sheet.description.title"}}</div>
+                <div class="fieldblock">
+                    <div class="label">{{localize "gurps.sheet.description.gender"}}</div>
+                    <div class="field"><input name="data.profile.gender" type="text" value="{{data.profile.gender}}"/></div>
+                    <div class="label">{{localize "gurps.sheet.description.age"}}</div>
+                    <div class="field"><input name="data.profile.age" type="text" value="{{data.profile.age}}"/></div>
+                    <div class="label">{{localize "gurps.sheet.description.birthday"}}</div>
+                    <div class="field"><input name="data.profile.birthday" type="text" value="{{data.profile.birthday}}"/></div>
+                    <div class="label">{{localize "gurps.sheet.description.religion"}}</div>
+                    <div class="field"><input name="data.profile.religion" type="text" value="{{data.profile.religion}}"/></div>
+                </div>
+                <div class="fieldblock">
+                    <div class="label">{{localize "gurps.sheet.description.height"}}</div>
+                    <div class="field"><input name="data.profile.height" type="text" value="{{data.profile.height}}"/></div>
+                    <div class="label">{{localize "gurps.sheet.description.weight"}}</div>
+                    <div class="field"><input name="data.profile.weight" type="text" value="{{data.profile.weight}}"/></div>
+                    <div class="label">{{localize "gurps.sheet.description.SM"}}</div>
+                    <div class="field"><input name="data.profile.SM" type="text" value="{{data.profile.SM}}"/></div>
+                    <div class="label">{{localize "gurps.sheet.description.tech_level"}}</div>
+                    <div class="field"><input name="data.profile.tech_level" type="text" value="{{data.profile.tech_level}}"/></div>
+                    <div class="label">{{localize "gurps.sheet.description.body_type"}}</div>
+                    <div class="field">
+                        <select name="data.profile.body_type">
+                            {{#select actor.data.profile.body_type}}
+                            {{#each config.body_type as |v k|}}
+                                <option value="{{k}}">{{localize v.name}}</option>
+                            {{/each}}
+                            {{/select}}
+                        </select>
+                    </div>
+                </div>
+                <div class="fieldblock">
+                    <div class="label">{{localize "gurps.sheet.description.hair"}}</div>
+                    <div class="field"><input name="data.profile.hair" type="text" value="{{data.profile.hair}}"/></div>
+                    <div class="label">{{localize "gurps.sheet.description.eyes"}}</div>
+                    <div class="field"><input name="data.profile.eyes" type="text" value="{{data.profile.eyes}}"/></div>
+                    <div class="label">{{localize "gurps.sheet.description.skin"}}</div>
+                    <div class="field"><input name="data.profile.skin" type="text" value="{{data.profile.skin}}"/></div>
+                    <div class="label">{{localize "gurps.sheet.description.handedness"}}</div>
+                    <div class="field"><input name="data.profile.handedness" type="text" value="{{data.profile.handedness}}"/></div>
+                </div>
+            </div>
+            <div id="points">
+                <div class="header">{{data.points.total}}{{localize "gurps.sheet.points.total"}}</div>
+                <div class="fieldblock">
+                    <div class="field"><input name="data.points.unspent" type="text" value="{{data.points.unspent}}"/></div>
+                    <div class="label">{{localize "gurps.sheet.points.unspent"}}<a class="edit-toggle refresh">{{#if (eq editable true)}}<i class="fas fa-lock-open"></i>{{else}}<i class="fas fa-lock"></i>{{/if}}</a></div>
+                    <div class="field noedit">{{data.points.race}}</div>
+                    <div class="label">{{localize "gurps.sheet.points.race"}}</div>
+                    <div class="field noedit">{{data.points.attributes}}</div>
+                    <div class="label">{{localize "gurps.sheet.points.attributes"}}</div>
+                    <div class="field noedit">{{data.points.advantages}}</div>
+                    <div class="label">{{localize "gurps.sheet.points.advantages"}}</div>
+                    <div class="field noedit">{{data.points.disadvantages}}</div>
+                    <div class="label">{{localize "gurps.sheet.points.disadvantages"}}</div>
+                    <div class="field noedit">{{data.points.quirks}}</div>
+                    <div class="label">{{localize "gurps.sheet.points.quirks"}}</div>
+                    <div class="field noedit">{{data.points.skills}}</div>
+                    <div class="label">{{localize "gurps.sheet.points.skills"}}</div>
+                    <div class="field noedit">{{data.points.spells}}</div>
+                    <div class="label">{{localize "gurps.sheet.points.spells"}}</div>
+                </div>
+            </div>
+        </div>
+        <div id="stats">
+            <div id="primary-attributes">
+                <div class="header">{{localize "gurps.sheet.primary_attributes.title"}}</div>
+                <div class="fieldblock3">
+                    {{#each primary_attributes}}
+                    <div class="points">[{{this.calc.points}}]</div>
+                    <div class="field"><input class="set" data-list="primary_attributes" data-path="{{@index}}.level" type="text" value="{{this.calc.value}}" data-dtype="Number"/></div>
+                    <div class="label">{{this.label}}</div>
+                    {{/each}}
+                    <hr>
+                    <div class="points"></div>
+                    <div class="field noedit">{{damage.thrust}}</div>
+                    <div class="label">{{localize "gurps.sheet.primary_attributes.thrust"}}</div>
+                    <div class="points"></div>
+                    <div class="field noedit">{{damage.swing}}</div>
+                    <div class="label">{{localize "gurps.sheet.primary_attributes.swing"}}</div>
+                </div>
+            </div>
+            <div id="secondary-attributes">
+                <div class="header">{{localize "gurps.sheet.secondary_attributes.title"}}</div>
+                <div class="fieldblock3">
+                    {{#each secondary_attributes}}
+                    <div class="points">[{{this.calc.points}}]</div>
+                    <div class="field"><input class="set" data-path="{{this.path}}.value" type="text" value="{{this.calc.value}}" data-dtype="Number"/></div>
+                    <div class="label">{{this.label}}</div>
+                    {{/each}}
+                </div>
+            </div>
+            <div id="point-pools">
+                <div class="header">{{localize "gurps.sheet.point_pools.title"}}</div>
+                <div class="fieldblock6">
+                    {{#each point_pools}}
+                    <div class="points">[{{this.calc.points}}]</div>
+                    <div class="field"><input class="set" data-path="{{this.path}}.current" type="text" value="{{this.calc.current}}" data-dtype="Number"/></div>
+                    <div class="label">{{localize "gurps.sheet.point_pools.of"}}</div>
+                    <div class="field"><input class="set" data-path="{{this.path}}.value" type="text" value="{{this.calc.value}}" data-dtype="Number"/></div>
+                    <div class="label">{{this.label}}</div>
+                    <div class="label">[{{this.status}}]</div>
+                    {{/each}}
+                </div>
+            </div>
+            <div id="encumbrance">
+                <div class="header">{{localize "gurps.sheet.encumbrance.title"}}</div>
+                <div class="encmarkerh header"></div>
+                <div class="ench header">{{localize "gurps.sheet.encumbrance.level.title"}}</div>
+                <div class="loadh header">{{localize "gurps.sheet.encumbrance.limit"}}</div>
+                <div class="moveh header">{{localize "gurps.sheet.encumbrance.move"}}</div>
+                <div class="dodgeh header">{{localize "gurps.sheet.encumbrance.dodge"}}</div>
+                {{#each data.encumbrance as |v k|}}
+                <div class="encmarker "></div>
+                <div class="enc">{{localize (concat "gurps.sheet.encumbrance.level." k)}} {{k}}</div>
+                <div class="load">{{v.limit}} lb</div>
+                <div class="move">{{v.move}}</div>
+                <div class="dodge">{{v.dodge}}</div>
+                {{/each}}                        
+            </div>
+            <div id="lifting">
+                <div class="header">{{localize "gurps.sheet.lifting.title"}}</div>
+                <div class="lift">{{data.lifts.basic_lift}} lb</div>
+                <div class="liftdesc">{{localize "gurps.sheet.lifting.basic_lift"}}</div>
+                <div class="lift">{{data.lifts.one_handed}} lb</div>
+                <div class="liftdesc">{{localize "gurps.sheet.lifting.one_handed"}}</div>
+                <div class="lift">{{data.lifts.two_handed}} lb</div>
+                <div class="liftdesc">{{localize "gurps.sheet.lifting.two_handed"}}</div>
+                <div class="lift">{{data.lifts.shove}} lb</div>
+                <div class="liftdesc">{{localize "gurps.sheet.lifting.shove"}}</div>
+                <div class="lift">{{data.lifts.running_shove}} lb</div>
+                <div class="liftdesc">{{localize "gurps.sheet.lifting.running_shove"}}</div>
+                <div class="lift">{{data.lifts.carry_on_back}} lb</div>
+                <div class="liftdesc">{{localize "gurps.sheet.lifting.carry_on_back"}}</div>
+                <div class="lift">{{data.lifts.shift_slightly}} lb</div>
+                <div class="liftdesc">{{localize "gurps.sheet.lifting.shift_slightly"}}</div>
+            </div>
+            <div id="location">
+                <div class="header">{{localize "gurps.sheet.hit_location.title"}}</div>
+                <div class="roll header">{{localize "gurps.sheet.hit_location.roll"}}</div>
+                <div class="where header">{{localize "gurps.sheet.hit_location.location"}}</div>
+                <div class="penalty header">{{localize "gurps.sheet.hit_location.penalty"}}</div>
+                <div class="DR header">{{localize "gurps.sheet.hit_location.DR"}}</div>
+                {{#each body_plan}}
+                <div class="roll">{{this.roll}}</div>
+                <div class="where">{{localize this.name}}</div>
+                <div class="penalty">{{this.penalty}}</div>
+                <div class="dr tooltip">{{this.DR_short}}
+                    <div class="tooltiptext">
+                        <p>tooltip text</p>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+            <div id="active-effects">
+                <div class="header">{{localize "gurps.sheet.active_effects.title"}}</div>
+                {{#each active_effects}}
+                <div class="label">{{this.name}}</div>
+                {{/each}}
+            </div>
+        </div>
+        {{#if (gt data.reactions.length 0)}}
+        <div id="reactions">
+            <div class="modifier header">{{localize "gurps.sheet.reactions.modifier"}}</div>
+            <div class="situation header">{{localize "gurps.sheet.reactions.reaction"}}</div>
+            {{#each data.reactions}}
+            <div class="modifier">{{this.amount}}</div>
+            <div class="situation">{{this.situation}}</div>
+            {{/each}}
+        </div>
+        {{/if}}
+        {{#if (gt data.conditional_modifiers.length 0)}}
+        <div id="conditional_modifiers">
+            <div class="modifier header">{{localize "gurps.sheet.conditional_modifiers.modifier"}}</div>
+            <div class="situation header">{{localize "gurps.sheet.conditional_modifiers.condition"}}</div>
+            {{#each data.conditional_modifiers}}
+            <div class="modifier">{{this.amount}}</div>
+            <div class="situation">{{this.situation}}</div>
+            {{/each}}
+        </div>
+        {{/if}}
+        {{#if (gt data.melee_weapons.length 0)}}
+        <div id="melee">
+            <div class="desc header" >{{localize "gurps.sheet.melee_weapons.desc"}}</div>
+            <div class="usage header" >{{localize "gurps.sheet.melee_weapons.usage"}}</div>
+            <div class="level header" >{{localize "gurps.sheet.melee_weapons.level"}}</div>
+            <div class="parry header" >{{localize "gurps.sheet.melee_weapons.parry"}}</div>
+            <div class="block header" >{{localize "gurps.sheet.melee_weapons.block"}}</div>
+            <div class="damage header" >{{localize "gurps.sheet.melee_weapons.damage"}}</div>
+            <div class="reach header" >{{localize "gurps.sheet.melee_weapons.reach"}}</div>
+            <div class="st header" >{{localize "gurps.sheet.melee_weapons.st"}}</div>
+            <div></div>
+            {{#each data.melee_weapons}}
+                <div class="desc">{{this.name}}
+                    <div class="list_note"></div>
+                </div>
+                <div class="usage">{{this.usage}}</div>
+                <div class="level">{{this.level}}</div>
+                <div class="parry">{{this.parry_final}}</div>
+                <div class="block">{{this.block_final}}</div>
+                <div class="damage">{{this.damage_final}}</div>
+                <div class="reach">{{this.reach}}</div>
+                <div class="st">{{this.strength}}</div>
+                <div></div>
+            {{/each}}
+        </div>
+        {{/if}}
+        {{#if (gt data.ranged_weapons.length 0)}}
+        <div id="ranged">
+            <div class="desc header">{{localize "gurps.sheet.ranged_weapons.desc"}}</div>
+            <div class="usage header">{{localize "gurps.sheet.ranged_weapons.usage"}}</div>
+            <div class="level header">{{localize "gurps.sheet.ranged_weapons.level"}}</div>
+            <div class="acc header">{{localize "gurps.sheet.ranged_weapons.acc"}}</div>
+            <div class="damage header">{{localize "gurps.sheet.ranged_weapons.damage"}}</div>
+            <div class="range header">{{localize "gurps.sheet.ranged_weapons.range"}}</div>
+            <div class="rof header">{{localize "gurps.sheet.ranged_weapons.rof"}}</div>
+            <div class="shots header">{{localize "gurps.sheet.ranged_weapons.shots"}}</div>
+            <div class="bulk header">{{localize "gurps.sheet.ranged_weapons.bulk"}}</div>
+            <div class="rcl header">{{localize "gurps.sheet.ranged_weapons.recoil"}}</div>
+            <div class="st header">{{localize "gurps.sheet.ranged_weapons.st"}}</div>
+            {{#each data.ranged_weapons}}
+                <div class="desc">{{this.name}}
+                    <div class="list_note"></div>
+                </div>
+                <div class="usage">{{this.usage}}</div>
+                <div class="level">{{this.level}}</div>
+                <div class="acc">{{this.accuracy}}</div>
+                <div class="damage">{{this.damage_final}}</div>
+                <div class="range">{{this.range}}</div>
+                <div class="rof">{{this.rate_of_fire}}</div>
+                <div class="shots">{{this.shots}}</div>
+                <div class="bulk">{{this.bulk}}</div>
+                <div class="rcl">{{this.rcl}}</div>
+                <div class="st">{{this.st}}</div>
+            {{/each}}
+        </div>
+        {{/if}}
+        {{#if (gt advantages.length 0)}}
+        <div id="advantages" class="item-list">
+            <div class="desc header">{{localize "gurps.sheet.advantages.desc"}}</div>
+            <div class="pts header">{{localize "gurps.sheet.advantages.points"}}</div>
+            <div class="ref header">{{localize "gurps.sheet.advantages.reference"}}</div>
+            {{#each advantages as |item iid|}}
+                {{> "systems/gga/templates/actors/parts/actor-advantage.hbs"  item=item iid=iid}}
+            {{/each}}
+        </div>
+        {{/if}}
+        {{#if (gt skills.length 0)}}
+        <div id="skills" class="item-list">
+            <div class="desc header">{{localize "gurps.sheet.skills.desc"}}</div>
+            <div class="sl header">{{localize "gurps.sheet.skills.sl"}}</div>
+            <div class="rsl header">{{localize "gurps.sheet.skills.rsl"}}</div>
+            <div class="pts header">{{localize "gurps.sheet.skills.points"}}</div>
+            <div class="ref header">{{localize "gurps.sheet.skills.reference"}}</div>
+            {{#each skills as |item iid|}}
+                {{> "systems/gga/templates/actors/parts/actor-skill.hbs"  item=item iid=iid}}
+            {{/each}}
+        </div>
+        {{/if}}
+        {{#if (gt spells.length 0)}}
+        <div id="spells" class="item-list">
+            <div class="desc header">{{localize "gurps.sheet.spells.desc"}}</div>
+            <div class="resist header">{{localize "gurps.sheet.spells.resist"}}</div>
+            <div class="class header">{{localize "gurps.sheet.spells.class"}}</div>
+            <div class="college header">{{localize "gurps.sheet.spells.college"}}</div>
+            <div class="mana header">{{localize "gurps.sheet.spells.cost"}}</div>
+            <div class="maintain header">{{localize "gurps.sheet.spells.maintain"}}</div>
+            <div class="time header">{{localize "gurps.sheet.spells.time"}}</div>
+            <div class="duration header">{{localize "gurps.sheet.spells.duration"}}</div>
+            <div class="sl header">{{localize "gurps.sheet.spells.sl"}}</div>
+            <div class="rsl header">{{localize "gurps.sheet.spells.rsl"}}</div>
+            <div class="pts header">{{localize "gurps.sheet.spells.points"}}</div>
+            <div class="ref header">{{localize "gurps.sheet.spells.reference"}}</div>
+            {{#each spells as |item iid|}}
+                {{> "systems/gga/templates/actors/parts/actor-spell.hbs"  item=item iid=iid}}
+            {{/each}}
+        </div>
+        {{/if}}
+        {{#if (gt equipment.length 0)}}
+        <div id="equipment" class="item-list">
+            <div class="equipped header">{{localize "gurps.sheet.equipment.equipped"}}</div>
+            <div class="qty header">{{localize "gurps.sheet.equipment.qty"}}</div>
+            <div class="desc header">{{localize "gurps.sheet.equipment.desc"}}</div>
+            <div class="cost header">{{localize "gurps.sheet.equipment.cost"}}</div>
+            <div class="weight header">{{localize "gurps.sheet.equipment.weight"}}</div>
+            <div class="sum_cost header">{{localize "gurps.sheet.equipment.sum_cost"}}</div>
+            <div class="sum_weight header">{{localize "gurps.sheet.equipment.sum_weight"}}</div>
+            <div class="ref header">{{localize "gurps.sheet.equipment.reference"}}</div>
+
+            {{#each equipment as |item iid|}}
+                {{> "systems/gga/templates/actors/parts/actor-equipment.hbs"  item=item iid=iid}}
+            {{/each}}
+            
+        </div>
+        {{/if}}
+        {{#if (gt other_equipment.length 0)}}
+        <div id="other_equipment" class="item-list">
+            <div class="qty header">{{localize "gurps.sheet.other_equipment.qty"}}</div>
+            <div class="desc header">{{localize "gurps.sheet.other_equipment.desc"}}</div>
+            <div class="cost header">{{localize "gurps.sheet.other_equipment.cost"}}</div>
+            <div class="weight header">{{localize "gurps.sheet.other_equipment.weight"}}</div>
+            <div class="sum_cost header">{{localize "gurps.sheet.other_equipment.sum_cost"}}</div>
+            <div class="sum_weight header">{{localize "gurps.sheet.other_equipment.sum_weight"}}</div>
+            <div class="ref header">{{localize "gurps.sheet.other_equipment.reference"}}</div>
+
+            {{#each other_equipment as |item iid|}}
+                {{> "systems/gga/templates/actors/parts/actor-equipment.hbs"  item=item iid=iid}}
+            {{/each}}
+            
+        </div>
+        {{/if}}
+        {{#if (gt notes.length 0)}}
+        <div id="notes" class="item-list">
+            <div class="desc header">{{localize "gurps.sheet.notes.desc"}}</div>
+            <div class="ref header">{{localize "gurps.sheet.notes.reference"}}</div>
+
+            {{#each notes as |item iid|}}
+                {{> "systems/gga/templates/actors/parts/actor-notes.hbs" item=item iid=iid}}
+            {{/each}}
+        </div>
+        {{/if}}
+        <div id="footer">
+            GCS is copyrighted ©1998-2020 by Richard A. Wilkes • All rights reserved •
+            <a href="https://gurpscharactersheet.com">gurpscharactersheet.com</a>
+        </div>
+    </div>
+</form>

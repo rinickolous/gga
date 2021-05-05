@@ -1,0 +1,213 @@
+{
+    "ACTOR": {
+        "TypeCharacter": "Character"
+    },
+    "ITEM": {
+        "TypeAdvantage": "Advantage",
+        "TypeAdvantage_container": "Advantage Container",
+        "TypeSkill": "Skill",
+        "TypeSkill_container": "Skill Container",
+        "TypeTechnique": "Technique",
+        "TypeSpell": "Spell",
+        "TypeSpell_container": "Spell Container",
+        "TypeRitual_magic_spell": "Ritual Magic Spell",
+        "TypeEquipment": "Equipment",
+        "TypeEquipment_container": "Equipment Container",
+        "TypeModifier": "Advantage Modifier",
+        "TypeEqp_modifier": "Equipment Modifier",
+        "TypeNote": "Note",
+        "TypeNote_container": "Note Container"
+        
+    },
+    "gurps": {
+        "sheet": {
+            "portrait": {
+                "title": "Portrait"
+            },
+            "identity": {
+                "title": "Identity",
+                "name": "Name:",
+                "character_title": "Title:",
+                "player_name": "Player Name:"
+            },
+            "miscellaneous": {
+                "title": "Miscellaneous",
+                "created_date": "Created:",
+                "modified_date": "Modified:",
+                "options": "Options:"
+            },
+            "description": {
+                "title": "Description",
+                "gender": "Gender:",
+                "age": "Age:",
+                "birthday": "Birthday:",
+                "religion": "Religion:",
+                "height": "Height:",
+                "weight": "Weight:",
+                "SM": "Size:",
+                "tech_level": "TL:",
+                "body_type": "Body Type:",
+                "hair": "Hair:",
+                "eyes": "Eyes:",
+                "skin": "Skin:",
+                "handedness": "Hand"
+            },
+            "points": {
+                "total": " Points",
+                "unspent": "Unspent",
+                "race": "Race",
+                "attributes": "Attributes",
+                "advantages": "Advantages",
+                "disadvantages": "Disadvantages",
+                "quirks": "Quirks",
+                "skills": "Skills",
+                "spells": "Spells"
+            },
+            "primary_attributes": {
+                "title": "Primary Attributes",
+                "thrust": "Basic Thrust",
+                "swing": "Basic Swing"
+            },
+            "secondary_attributes": {
+                "title": "Secondary Attributes"
+            },
+            "point_pools": {
+                "title": "Point Pools",
+                "of": "of"
+            },
+            "hit_location": {
+                "title": "Hit Locations",
+                "roll": "Roll",
+                "location": "Where",
+                "penalty": "Penalty",
+                "DR": "DR"
+            },
+            "encumbrance": {
+                "title": "Encumbrnace, Move & Dodge",
+                "level": {
+                    "0": "None",
+                    "1": "Light",
+                    "2": "Medium",
+                    "3": "Heavy",
+                    "4": "X-Heavy",
+                    "title": "Level"
+                },
+                "limit": "Max Load",
+                "move": "Move",
+                "dodge": "Dodge"
+
+            },
+            "lifting": {
+                "title": "Lifting & Moving Things",
+                "basic_lift": "Basic Lift",
+                "one_handed": "One-Handed Lift",
+                "two_handed": "Two-Handed Lift",
+                "shove": "Shove & Knock Over",
+                "running_shove": "Running Shove & Knock Over",
+                "carry_on_back": "Carry On Back",
+                "shift_slightly": "Shift Slightly"
+            },
+            "active_effects": {
+                "title": "Active Effects"
+            },
+            "reactions": {
+                "modifier": "Modifier",
+                "reaction": "Reaction"
+            },
+            "conditional_modifiers": {
+                "modifier": "Modifier",
+                "condition": "Condition"
+            },
+            "melee_weapons": {
+                "desc": "Melee Weapons",
+                "usage": "Usage",
+                "level": "Lvl",
+                "parry": "Parry",
+                "block": "Block",
+                "damage": "Damage",
+                "reach": "Reach",
+                "st": "ST"
+            },
+            "ranged_weapons": {
+                "desc": "Ranged Weapons",
+                "usage": "Usage",
+                "level": "Lvl",
+                "acc": "Acc",
+                "damage": "Damage",
+                "range": "Range",
+                "rof": "RoF",
+                "shots": "Shots",
+                "bulk": "Bulk",
+                "recoil": "Rcl",
+                "st": "ST"
+            },
+            "advantages": {
+                "desc": "Advantages & Disadvantages",
+                "points": "Pts",
+                "reference": "Ref"
+            },
+            "skills": {
+                "desc": "Skills",
+                "sl": "SL",
+                "rsl": "RSL",
+                "points": "Pts",
+                "reference": "Ref"
+            },
+            "spells": {
+                "desc": "Spells",
+                "resist": "Resist",
+                "class": "Class",
+                "college": "College",
+                "cost": "Cost",
+                "maintain": "Maintain",
+                "time": "Time",
+                "duration": "Duration",
+                "sl": "SL",
+                "rsl": "RSL",
+                "points": "Pts",
+                "reference": "Ref"
+            },
+            "equipment": {
+                "equipped": "E",
+                "qty": "Qty",
+                "desc": "Carried Equipment",
+                "cost": "$",
+                "weight": "lbs",
+                "sum_cost": "∑ $",
+                "sum_weight": "∑ lbs",
+                "reference": "Ref"
+            },
+            "other_equipment": {
+                "qty": "Qty",
+                "desc": "Other Equipment",
+                "cost": "$",
+                "weight": "lbs",
+                "sum_cost": "∑ $",
+                "sum_weight": "∑ lbs",
+                "reference": "Ref"
+            },
+            "notes": {
+                "desc": "Notes",
+                "reference": "Ref"
+            }
+        },
+        "body_type": {
+            "arachnoid": "Arachnoid",
+            "avian": "Avian",
+            "cancroid": "Cancroid",
+            "centaur": "Centaur",
+            "hexapod": "Hexapod",
+            "humanoid": "Humanoid",
+            "icthyoid": "Icthyoid",
+            "octopod": "Octopod",
+            "quadruped": "Quadruped",
+            "scorpion": "Scorpion",
+            "snakemen": "Snakemen",
+            "squid": "Squid",
+            "vermiform": "Vermiform",
+            "winged_hexapod": "Winged Hexapod",
+            "winged_quadruped": "Winged Quadruped",
+            "winged_vermiform": "Winged Vermiform"
+        }
+    }
+}

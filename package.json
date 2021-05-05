@@ -9,15 +9,6 @@
     "type": "git",
     "url": ""
   },
-  "bugs": {
-    "url": ""
-  },
-  "contributors": [
-    {
-      "name": "",
-      "email": ""
-    }
-  ],
   "scripts": {
     "build": "gulp build",
     "build:watch": "gulp watch",
