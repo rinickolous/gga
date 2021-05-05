@@ -1,0 +1,580 @@
+{
+  "Actor": {
+    "types": ["character"],
+    "templates": [],
+    "character": {
+      "settings": {
+        "version": 1,
+        "default_length_units": "ft_in",
+        "default_weight_units": "lb",
+        "user_description_display": "tooltip",
+        "modifiers_display": "inline",
+        "notes_display": "inline",
+        "attributes": [
+          {
+            "id": "st",
+            "type": "integer",
+            "name": "ST",
+            "full_name": "Strength",
+            "attribute_base": "10",
+            "cost_per_point": 10,
+            "cost_adj_percent_per_sm": 10
+          },
+          {
+            "id": "dx",
+            "type": "integer",
+            "name": "DX",
+            "full_name": "Dexterity",
+            "attribute_base": "10",
+            "cost_per_point": 20,
+            "cost_adj_percent_per_sm": 0
+          },
+          {
+            "id": "iq",
+            "type": "integer",
+            "name": "IQ",
+            "full_name": "Intelligence",
+            "attribute_base": "10",
+            "cost_per_point": 20,
+            "cost_adj_percent_per_sm": 0
+          },
+          {
+            "id": "ht",
+            "type": "integer",
+            "name": "HT",
+            "full_name": "Health",
+            "attribute_base": "10",
+            "cost_per_point": 10,
+            "cost_adj_percent_per_sm": 0
+          },
+          {
+            "id": "will",
+            "type": "integer",
+            "name": "Will",
+            "full_name": "",
+            "attribute_base": "$iq",
+            "cost_per_point": 5,
+            "cost_adj_percent_per_sm": 0
+          },
+          {
+            "id": "fright_check",
+            "type": "integer",
+            "name": "Fright Check",
+            "full_name": "",
+            "attribute_base": "$will",
+            "cost_per_point": 2,
+            "cost_adj_percent_per_sm": 0
+          },
+          {
+            "id": "per",
+            "type": "integer",
+            "name": "Per",
+            "full_name": "Perception",
+            "attribute_base": "$iq",
+            "cost_per_point": 5,
+            "cost_adj_percent_per_sm": 0
+          },
+          {
+            "id": "vision",
+            "type": "integer",
+            "name": "Vision",
+            "full_name": "",
+            "attribute_base": "$per",
+            "cost_per_point": 2,
+            "cost_adj_percent_per_sm": 0
+          },
+          {
+            "id": "hearing",
+            "type": "integer",
+            "name": "Hearing",
+            "full_name": "",
+            "attribute_base": "$per",
+            "cost_per_point": 2,
+            "cost_adj_percent_per_sm": 0
+          },
+          {
+            "id": "taste_smell",
+            "type": "integer",
+            "name": "Taste & Smell",
+            "full_name": "",
+            "attribute_base": "$per",
+            "cost_per_point": 2,
+            "cost_adj_percent_per_sm": 0
+          },
+          {
+            "id": "touch",
+            "type": "integer",
+            "name": "Touch",
+            "full_name": "",
+            "attribute_base": "$per",
+            "cost_per_point": 2,
+            "cost_adj_percent_per_sm": 0
+          },
+          {
+            "id": "basic_speed",
+            "type": "decimal",
+            "name": "Basic Speed",
+            "full_name": "",
+            "attribute_base": "($dx+$ht)/4",
+            "cost_per_point": 20,
+            "cost_adj_percent_per_sm": 0
+          },
+          {
+            "id": "basic_move",
+            "type": "integer",
+            "name": "Basic Move",
+            "full_name": "",
+            "attribute_base": "floor($basic_speed)",
+            "cost_per_point": 5,
+            "cost_adj_percent_per_sm": 0
+          },
+          {
+            "id": "fp",
+            "type": "pool",
+            "name": "FP",
+            "full_name": "Fatigue Points",
+            "attribute_base": "$ht",
+            "cost_per_point": 3,
+            "cost_adj_percent_per_sm": 0,
+            "thresholds": [
+              {
+                "state": "Unconscious",
+                "explanation": "",
+                "multiplier": -1,
+                "divisor": 1,
+                "addition": 0,
+                "ops": ["halve_move", "halve_dodge", "halve_st"]
+              },
+              {
+                "state": "Collapse",
+                "explanation": "<html><body>\n<b>Roll vs. Will</b> to do anything besides talk or rest; failure causes unconsciousness<br>\nEach FP you lose below 0 also causes 1 HP of injury<br>\nMove, Dodge and ST are halved (B426)\n</body></html>",
+                "multiplier": 0,
+                "divisor": 1,
+                "addition": 0,
+                "ops": ["halve_move", "halve_dodge", "halve_st"]
+              },
+              {
+                "state": "Tired",
+                "explanation": "Move, Dodge and ST are halved (B426)",
+                "multiplier": 1,
+                "divisor": 3,
+                "addition": 0,
+                "ops": ["halve_move", "halve_dodge", "halve_st"]
+              },
+              {
+                "state": "Tiring",
+                "explanation": "",
+                "multiplier": 1,
+                "divisor": 1,
+                "addition": -1,
+                "ops": []
+              },
+              {
+                "state": "Rested",
+                "explanation": "",
+                "multiplier": 1,
+                "divisor": 1,
+                "addition": 0,
+                "ops": []
+              }
+            ]
+          },
+          {
+            "id": "hp",
+            "type": "pool",
+            "name": "HP",
+            "full_name": "Hit Points",
+            "attribute_base": "$st",
+            "cost_per_point": 2,
+            "cost_adj_percent_per_sm": 10,
+            "thresholds": [
+              {
+                "state": "Dead",
+                "explanation": "",
+                "multiplier": -5,
+                "divisor": 1,
+                "addition": 0,
+                "ops": ["halve_move", "halve_dodge"]
+              },
+              {
+                "state": "Dying #4",
+                "explanation": "<html><body>\n<b>Roll vs. HT</b> to avoid death<br>\n<b>Roll vs. HT-4</b> every second to avoid falling unconscious<br>\nMove and Dodge are halved (B419)\n</body></html>",
+                "multiplier": -4,
+                "divisor": 1,
+                "addition": 0,
+                "ops": ["halve_move", "halve_dodge"]
+              },
+              {
+                "state": "Dying #3",
+                "explanation": "<html><body>\n<b>Roll vs. HT</b> to avoid death<br>\n<b>Roll vs. HT-3</b> every second to avoid falling unconscious<br>\nMove and Dodge are halved (B419)\n</body></html>",
+                "multiplier": -3,
+                "divisor": 1,
+                "addition": 0,
+                "ops": ["halve_move", "halve_dodge"]
+              },
+              {
+                "state": "Dying #2",
+                "explanation": "<html><body>\n<b>Roll vs. HT</b> to avoid death<br>\n<b>Roll vs. HT-2</b> every second to avoid falling unconscious<br>\nMove and Dodge are halved (B419)\n</body></html>",
+                "multiplier": -2,
+                "divisor": 1,
+                "addition": 0,
+                "ops": ["halve_move", "halve_dodge"]
+              },
+              {
+                "state": "Dying #1",
+                "explanation": "<html><body>\n<b>Roll vs. HT</b> to avoid death<br>\n<b>Roll vs. HT-1</b> every second to avoid falling unconscious<br>\nMove and Dodge are halved (B419)\n</body></html>",
+                "multiplier": -1,
+                "divisor": 1,
+                "addition": 0,
+                "ops": ["halve_move", "halve_dodge"]
+              },
+              {
+                "state": "Collapse",
+                "explanation": "<html><body>\n<b>Roll vs. HT</b> every second to avoid falling unconscious<br>\nMove and Dodge are halved (B419)\n</body></html>",
+                "multiplier": 0,
+                "divisor": 1,
+                "addition": 0,
+                "ops": ["halve_move", "halve_dodge"]
+              },
+              {
+                "state": "Reeling",
+                "explanation": "Move and Dodge are halved (B419)",
+                "multiplier": 1,
+                "divisor": 3,
+                "addition": 0,
+                "ops": ["halve_move", "halve_dodge"]
+              },
+              {
+                "state": "Wounded",
+                "explanation": "",
+                "multiplier": 1,
+                "divisor": 1,
+                "addition": -1,
+                "ops": []
+              },
+              {
+                "state": "Healthy",
+                "explanation": "",
+                "multiplier": 1,
+                "divisor": 1,
+                "addition": 0,
+                "ops": []
+              }
+            ]
+          }
+        ],
+        "use_multiplicative_modifiers": false,
+        "use_modifying_dice_plus_adds": false,
+        "use_know_your_own_strength": false,
+        "use_reduced_swing": false,
+        "use_thrust_equals_swing_minus_2": false,
+        "use_simple_metric_conversions": true,
+        "show_college_in_sheet_spells": true,
+        "show_difficulty": false,
+        "show_advantage_modifier_adj": false,
+        "show_equipment_modifier_adj": false,
+        "show_spell_adj": false,
+        "use_title_in_footer": false,
+        "block_layout": [
+          "reactions conditional_modifiers",
+          "melee",
+          "ranged",
+          "advantages skills",
+          "spells",
+          "equipment",
+          "other_equipment",
+          "notes"
+        ]
+      },
+      "created_date": "",
+      "modified_date": "",
+      "profile": {
+        "player_name": "",
+        "title": "",
+        "age": "",
+        "birthday": "",
+        "eyes": "",
+        "hair": "",
+        "skin": "",
+        "handedness": "",
+        "height": "",
+        "weight": "",
+        "gender": "",
+        "body_type": "",
+        "tech_level": "",
+        "religiion": ""
+      },
+      "attributes": [
+        {
+          "attr_id": "st",
+          "adj": 0,
+          "calc": {
+            "value": 10,
+            "points": 0
+          }
+        },
+        {
+          "attr_id": "dx",
+          "adj": 0,
+          "calc": {
+            "value": 10,
+            "points": 0
+          }
+        },
+        {
+          "attr_id": "iq",
+          "adj": 0,
+          "calc": {
+            "value": 10,
+            "points": 0
+          }
+        },
+        {
+          "attr_id": "ht",
+          "adj": 0,
+          "calc": {
+            "value": 10,
+            "points": 0
+          }
+        },
+        {
+          "attr_id": "will",
+          "adj": 0,
+          "calc": {
+            "value": 10,
+            "points": 0
+          }
+        },
+        {
+          "attr_id": "fright_check",
+          "adj": 0,
+          "calc": {
+            "value": 10,
+            "points": 0
+          }
+        },
+        {
+          "attr_id": "per",
+          "adj": 0,
+          "calc": {
+            "value": 10,
+            "points": 0
+          }
+        },
+        {
+          "attr_id": "vision",
+          "adj": 0,
+          "calc": {
+            "value": 10,
+            "points": 0
+          }
+        },
+        {
+          "attr_id": "hearing",
+          "adj": 0,
+          "calc": {
+            "value": 10,
+            "points": 0
+          }
+        },
+        {
+          "attr_id": "taste_smell",
+          "adj": 0,
+          "calc": {
+            "value": 10,
+            "points": 0
+          }
+        },
+        {
+          "attr_id": "touch",
+          "adj": 0,
+          "calc": {
+            "value": 10,
+            "points": 0
+          }
+        },
+        {
+          "attr_id": "basic_speed",
+          "adj": 0,
+          "calc": {
+            "value": 5,
+            "points": 0
+          }
+        },
+        {
+          "attr_id": "basic_move",
+          "adj": 0,
+          "calc": {
+            "value": 5,
+            "points": 0
+          }
+        },
+        {
+          "attr_id": "fp",
+          "adj": 0,
+          "damage": 0,
+          "calc": {
+            "value": 10,
+            "points": 0
+          }
+        },
+        {
+          "attr_id": "hp",
+          "adj": 0,
+          "damage": 0,
+          "calc": {
+            "value": 10,
+            "points": 0
+          }
+        }
+      ],
+      "points": {
+        "race": 0,
+        "attributes": 0,
+        "advantages": 0,
+        "disadvantages": 0,
+        "quirks": 0,
+        "skills": 0,
+        "spells": 0,
+        "unspent": 0,
+        "total": 0
+      },
+      "lifts": {
+        "basic_lift": 20,
+        "one_handed": 40,
+        "two_handed": 160,
+        "shove": 240,
+        "running_shove": 480,
+        "carry_on_back": 300,
+        "shift_slightly": 1000
+      },
+      "damage": {
+        "thrust": [1, -2],
+        "swing": [1, 0]
+      },
+      "encumbrance": [
+        {
+          "limit": 20,
+          "move": 5,
+          "dodge": 8
+        },
+        {
+          "limit": 40,
+          "move": 4,
+          "dodge": 7
+        },
+        {
+          "limit": 60,
+          "move": 3,
+          "dodge": 6
+        },
+        {
+          "limit": 120,
+          "move": 2,
+          "dodge": 5
+        },
+        {
+          "limit": 200,
+          "move": 1,
+          "dodge": 4
+        }
+      ],
+      "reactions": [],
+      "conditional_modifiers": [],
+      "melee_weapons": [],
+      "ranged_weapons": [],
+      "body_plan": [
+        {
+          "name": "eyes",
+          "penalty": -9,
+          "roll": [],
+          "DR": []
+        },
+        {
+          "name": "skull",
+          "penalty": -7,
+          "roll": [3, 4],
+          "DR": [
+            {
+              "amount": 2,
+              "limitation": {
+                "compare": "is_anything",
+                "qualifier": ""
+              }
+            }
+          ]
+        },
+        {
+          "name": "face",
+          "penalty": -5,
+          "roll": [5],
+          "DR": []
+        },
+        {
+          "name": "right_leg",
+          "penalty": -2,
+          "roll": [6, 7],
+          "DR": []
+        },
+        {
+          "name": "right_arm",
+          "penalty": -2,
+          "roll": [8],
+          "DR": []
+        },
+        {
+          "name": "torso",
+          "penalty": 0,
+          "roll": [9, 10],
+          "DR": []
+        },
+        {
+          "name": "groin",
+          "penalty": -3,
+          "roll": [11],
+          "DR": []
+        },
+        {
+          "name": "left_arm",
+          "penalty": -2,
+          "roll": [12],
+          "DR": []
+        },
+        {
+          "name": "left_leg",
+          "penalty": -2,
+          "roll": [13, 14],
+          "DR": []
+        },
+        {
+          "name": "hand",
+          "penalty": -4,
+          "roll": [15],
+          "DR": []
+        },
+        {
+          "name": "feet",
+          "penalty": -4,
+          "roll": [16],
+          "DR": []
+        },
+        {
+          "name": "neck",
+          "penalty": -5,
+          "roll": [17, 18],
+          "DR": []
+        },
+        {
+          "name": "vitals",
+          "penalty": -3,
+          "roll": [],
+          "DR": []
+        }
+      ]
+    }
+  },
+  "Item": {
+    "types": [],
+    "templates": []
+  }
+}

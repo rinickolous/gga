@@ -1,0 +1,36 @@
+{
+  "name": "gga",
+  "title": "(GURPS Character Sheet) Game Aid",
+  "description": "Unofficial GURPS 4th Edition Game Aid, based on GCS (GURPS Character Sheet) by Richard A. Wilkes.",
+  "version": "0.1.0",
+  "author": "neck",
+  "authors": [
+    {
+      "name": "neck",
+      "email": "rinickolous@gmail.com",
+      "url": "https://twitter.com/TapeYourWebcam"
+    }
+  ],
+  "scripts": [],
+  "esmodules": ["module/gga.js"],
+  "styles": ["styles/gga.css"],
+  "packs": [],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "gridDistance": 1,
+  "gridUnits": "yd",
+  "minimumCoreVersion": "0.7.9",
+  "compatibleCoreVersion": "0.7.9",
+  "url": "https://github.com/rinickolous/gga",
+  "manifest": "https://github.com/rinickolous/gga/release/system.json",
+  "download": "",
+  "license": "LICENSE.txt",
+  "readme": "",
+  "bugs": "",
+  "changelog": ""
+}
