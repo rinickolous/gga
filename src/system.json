@@ -12,8 +12,12 @@
     }
   ],
   "scripts": [],
-  "esmodules": ["module/gga.js"],
-  "styles": ["styles/gga.css"],
+  "esmodules": [
+    "module/gga.js"
+  ],
+  "styles": [
+    "styles/gga.css"
+  ],
   "packs": [],
   "languages": [
     {
@@ -28,7 +32,7 @@
   "compatibleCoreVersion": "0.7.9",
   "url": "https://github.com/rinickolous/gga",
   "manifest": "https://github.com/rinickolous/gga/release/system.json",
-  "download": "",
+  "download": "https://github.com/rinickolous/gga/release/0.1.0.zip",
   "license": "LICENSE.txt",
   "readme": "",
   "bugs": "",
