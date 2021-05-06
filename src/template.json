@@ -574,7 +574,203 @@
     }
   },
   "Item": {
-    "types": [],
-    "templates": []
+    "types": ["advantage","advantage_container","skill","skill_container","technique","spell","spell_container","ritual_magic_spell","equipment","equipment_container","modifier","eqp_modifier","note","note_container"],
+    "templates": {
+        "common": {
+            "id": "",
+            "reference": "",
+            "notes": "",
+            "userdesc": "",
+            "categories": [],
+            "parent": "none"
+        },
+        "container": {
+            "open": true,
+            "children": []
+        },
+        "prereqs": {
+            "prereqs": {
+                "type": "prereq_list",
+                "all": true,
+                "when_tl": {
+                    "compare": "none"
+                },
+                "prereqs": [
+                    
+                ]
+            }
+        }
+    },
+    "advantage": {
+        "templates": ["common","prereqs"],
+        "round_down": false,
+        "allow_half_levels": false,
+        "disabled": false,
+        "mental": false,
+        "physical": true,
+        "social": false,
+        "exotic": false,
+        "supernatural": false,
+        "levels": "",
+        "base_points": 0,
+        "points_per_level": 0,
+        "calc": {
+            "points": 0
+        },
+        "cr": "none",
+        "cr_adj": "none",
+        "modifiers": [],
+        "features": [],
+        "weapons": []
+    },
+    "advantage_container": {
+        "templates": ["common","prereqs","container"],
+        "container_type": "group",
+        "enabled": true,
+        "calc": {
+            "points": 0
+        },
+        "cr": "none",
+        "cr_adj": "none",
+        "modifiers": []
+    },
+    "skill": {
+        "templates": ["common","prereqs"],
+        "specialization": "",
+        "tech_level": null,
+        "difficulty": "dx/a",
+        "enc_penalty": 0,
+        "points": 0,
+        "calc": {
+            "level": 0,
+            "rsl": ""
+        },
+        "defaults": [],
+        "features": [],
+        "weapons": [],
+        "weapon_bonus": []
+    },
+    "skill_container": {
+        "templates": ["common","container"]
+    },
+    "technique": {
+        "templates": ["common","prereqs"],
+        "difficulty": "A",
+        "limit": "none",
+        "points": 0,
+        "calc": {
+            "level": 0,
+            "rsl": ""
+        },
+        "default": {
+            "type": "Skill",
+            "name": "Skill",
+            "specialization": "",
+            "modifier": 0
+        },
+        "features": [],
+        "weapons": [],
+        "weapon_bonus": []
+    },
+    "spell": {
+        "templates": ["common","prereqs"],
+        "college": [],
+        "spell_class": "",
+        "casting_cost": "",
+        "maintenance_cost": "",
+        "resist": "",
+        "casting_time": "",
+        "duration": "",
+        "difficulty": "iq/h",
+        "power_source": "",
+        "points": 0,
+        "calc": {
+            "level": 0,
+            "rsl": ""
+        },
+        "tech_level": null,
+        "weapons": []
+    },
+    "ritual_magic_spell": {
+        "templates": ["common","prereqs"],
+        "base_skill": "",
+        "prereq_count": 0,
+        "colleges": [],
+        "spell_class": "",
+        "casting_cost": "",
+        "maintenance_cost": "",
+        "resist": "",
+        "casting_time": "",
+        "duration": "",
+        "difficulty": "iq/h",
+        "power_source": "",
+        "points": 0,
+        "calc": {
+            "level": 0,
+            "rsl": ""
+        },
+        "tech_level": null,
+        "weapons": []
+    },
+    "spell_container": {
+        "templates": ["common","container"]
+    },
+    "equipment": {
+        "templates": ["common","prereqs"],
+        "quantity": 1,
+        "value": 0,
+        "weight": 0,
+        "tech_level": "",
+        "legality_class": "",
+        "equipped": true,
+        "uses": 0,
+        "max_uses": 0,
+        "modifiers": [],
+        "features": [],
+        "weapons": []
+    },
+    "equipment_container": {
+        "templates": ["common","prereqs","container"],
+        "quantity": 1,
+        "value": 0,
+        "weight": 0,
+        "tech_level": "",
+        "legality_class": "",
+        "equipped": true,
+        "uses": 0,
+        "max_uses": 0,
+        "modifiers": [],
+        "features": [],
+        "weapons": []
+    },
+    "note": {
+        "text": "",
+        "reference": "",
+        "parent": ""
+    },
+    "note_container": {
+        "templates": ["container"],
+        "text": "",
+        "reference": "",
+        "parent": ""
+    },
+    "modifier": {
+        "templates": ["common"],
+        "enabled": true,
+        "cost_type": "percentage",
+        "levels": 1,
+        "affects": "total",
+        "features": []
+    },
+    "eqp_modifier": {
+        "templates": ["common"],
+        "enabled": true,
+        "cost_type": "to_original_cost",
+        "cost": "+0",
+        "weight_type": "to_original_weight",
+        "weight": "+0 lb",
+        "tech_level": "",
+        "features": []
+    }
   }
 }

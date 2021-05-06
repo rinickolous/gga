@@ -2,6 +2,37 @@
 /*             Less             */
 /* This is your Less entry file */
 /* ---------------------------- */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+// @font-face {
+//     font-family: "Roboto";
+//     font-weight: normal;
+//     font-style: normal;
+//     src: url('fonts/Roboto-Medium.ttf');
+// }
+
+// @font-face {
+//     font-family: "RobotoItalic";
+//     font-weight: normal;
+//     font-style: italic;
+//     src: url('fonts/Roboto-Italic.ttf');
+// }
+
+// @font-face {
+//     font-family: "RobotoBold";
+//     font-weight: bold;
+//     font-style: normal;
+//     src: url('fonts/Roboto-Bold.ttf');
+// }
+
+// @font-face {
+//     font-family: "RobotoBoldItalic";
+//     font-weight: bold;
+//     font-style: italic;
+//     src: url('fonts/Roboto-BoldItalic.ttf');
+// }
+
 @font-face {
     font-family: "New Aster";
     font-weight: 400;
@@ -23,13 +54,13 @@
 	.window-content {
 		height: 100%;
 		padding: 5px;
-		overflow-y: hidden;
+		// overflow-y: hidden;
 		background: white;
 	}
 }
 
 .character-sheet {
-    font-family: Verdana, sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 80%;
     font-weight: normal;
     padding: 0;
@@ -65,30 +96,48 @@
             margin-bottom: .1em;
         }
     }
+    .fieldblock6 {
+        display: grid;
+        grid-template-columns: 0fr 1fr 0fr 1fr 0fr 0fr;
+        align-items: end;
+        padding-bottom: 0.15em;
+        hr {
+            grid-column: 1 / span 6;
+            width: 100%;
+            border: none;
+            background-color: black;
+            height: 1px;
+            margin: 0;
+            margin-top: 0.2em;
+            margin-bottom: 0.1em;
+        }
+    }
 	.points {
         text-align: right;
         padding-left: .2em;
         padding-right: .2em;
-        font-size: 80%;
+        // font-size: 80%;
         align-self: center;
     }
 	.label {
         text-align: left;
         padding-left: .2em;
         padding-right: .2em;
-        font-size: 80%;
+        // font-size: 80%;
         white-space: nowrap;
         align-self: center;
     }
 	.field {
         margin-right: .2em;
-        font-size: 80%;
         width: 95%;
+        font-weight: 700;
 		&.noedit {
 			width:fit-content;
 		}
         input {
             border: none;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 700;
             color: #0000ff;
             height: 100%;
             padding: 1px;
@@ -150,7 +199,10 @@
         border-bottom: 1px solid black;
         color: white;
         text-align: center;
-        font-size: 80%;
+        // font-size: 80%;
+        .edit-toggle {
+            float: right;
+        }
     }
 	#encumbrance .encmarker:nth-last-child(10n+5), #encumbrance .enc:nth-last-child(10n+4), #encumbrance .load:nth-last-child(10n+3), #encumbrance .move:nth-last-child(10n+2), #encumbrance .dodge:nth-last-child(10n+1), #lifting .liftdesc:nth-last-child(4n+1), #lifting .lift:nth-last-child(4n+2), #location .roll:nth-last-child(8n+4), #location .where:nth-last-child(8n+3), #location .penalty:nth-last-child(8n+2), #location .dr:nth-last-child(8n+1), #conditional_modifiers .modifier:nth-child(even), #conditional_modifiers .situation:nth-child(odd), #melee .desc:nth-child(even), #melee .usage:nth-child(odd), #melee .level:nth-child(even), #melee .parry:nth-child(odd), #melee .block:nth-child(even), #melee .damage:nth-child(odd), #melee .reach:nth-child(even), #melee .st:nth-child(odd), #ranged .desc:nth-child(even), #ranged .usage:nth-child(odd), #ranged .level:nth-child(even), #ranged .acc:nth-child(odd), #ranged .damage:nth-child(even), #ranged .range:nth-child(odd), #ranged .rof:nth-child(even), #ranged .shots:nth-child(odd), #ranged .bulk:nth-child(even), #ranged .rcl:nth-child(odd), #ranged .st:nth-child(even), #advantages .desc:nth-child(even), #advantages .pts:nth-child(odd), #advantages .ref:nth-child(even), #skills .desc:nth-child(even), #skills .sl:nth-child(odd), #skills .rsl:nth-child(even), #skills .pts:nth-child(odd), #skills .ref:nth-child(even), #equipment .equipped:nth-child(even), #equipment .qty:nth-child(odd), #equipment .desc:nth-child(even), #equipment .cost:nth-child(odd), #equipment .weight:nth-child(even), #equipment .sum_cost:nth-child(odd), #equipment .sum_weight:nth-child(even), #equipment .ref:nth-child(odd), #other_equipment .qty:nth-child(even), #other_equipment .desc:nth-child(odd), #other_equipment .cost:nth-child(even), #other_equipment .weight:nth-child(odd), #other_equipment .sum_cost:nth-child(even), #other_equipment .sum_weight:nth-child(odd), #other_equipment .ref:nth-child(even), #notes .desc:nth-child(even) {
         background-color: #e8ffe8;
@@ -164,7 +216,7 @@
     #footer {
 		grid-area: footer;
         text-align: center;
-        font-size: 80%;
+        // font-size: 80%;
 		
     }
 	#sheet {
@@ -207,6 +259,9 @@
     }
     #miscellaneous {
         grid-area: miscellaneous;
+        .field {
+            border-bottom: none;
+        }
     }
     #points {
         grid-area: points;
@@ -240,10 +295,18 @@
         grid-area: stats;
 		display: grid;
 		grid-template:
-			"primary-attributes secondary-attributes location encumbrance active-effects"
-			"points-pools point-pools location lifting active-effects";
-		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+			"primary-attributes secondary-attributes location enc-lifts active-effects"
+			"points-pools point-pools location enc-lifts active-effects";
+		grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr;
 		grid-gap: 0.05in;
+    }
+    #enc-lifts {
+        grid-area: enc-lifts;
+        display: grid;
+        grid-template:
+            "encumbrance"
+            "lifting";
+        grid-gap: 0.05in;
     }
 	#primary-attributes, #secondary-attributes, #point-pools, #lifting, #active-effects {
         display: grid;
@@ -272,6 +335,7 @@
             "header header header header header"
             "encmarkerh ench loadh moveh dodgeh"
             "encmarker enc load move dodge";
+        grid-template-rows: repeat(1000, auto) 1fr;
     }
     #lifting {
         grid-area: lifting;
@@ -279,6 +343,7 @@
             "header header"
             "desc lift";
         grid-template-columns: 1fr 0fr;
+        grid-template-rows: repeat(1000, auto) 1fr;
     }
 	#lifting .header:first-child {
         grid-area: header;
@@ -289,7 +354,7 @@
             "header header header header"
             "roll where penalty dr";
         grid-template-rows: 0fr 0fr;
-        grid-auto-rows: 1fr;
+        grid-template-rows: repeat(1000, auto) 1fr;
     }
     #encumbrance, #location{
         .header:first-child {
@@ -366,4 +431,51 @@
         grid-area: notes;
     }
 
+    .entry {
+        font-weight: 700;
+        .list_note {
+            font-weight: normal;
+        }
+    }
+    .expandcollapseicon {
+        cursor: pointer;
+    }
+    .tooltip {
+        position: relative;
+        display: inline-block;
+        .tooltiptext {
+            visibility: hidden;
+            background-color: #555;
+            color: #fff;
+            text-align: left;
+            padding: 5px 5px;
+            border-radius: 6px;
+            /* Position the tooltip text */
+            position: absolute;
+            display: inline;
+            z-index: 1;
+            bottom: 125%;
+            transform: translateX(-50%);
+            /* Fade in tooltip */
+            opacity: 0;
+            transition: opacity 0.3s;
+            &:after {
+                content: "";
+                position: absolute;
+                top: 100%;
+                left: 47%;
+                margin-left: -5px;
+                border-width: 5px;
+                border-style: solid;
+                border-color: #555 transparent transparent transparent;
+            }
+        }
+        &:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    }
+    .dr.tooltip {
+        font-weight: 700;
+    }
 }

@@ -19,14 +19,17 @@
                 </div>
             </div>
             <div id="miscellaneous">
-                <div class="header">{{localize "gurps.sheet.miscellaneous.title"}}</div>
+                <div class="header">
+                    {{localize "gurps.sheet.miscellaneous.title"}}
+                    <a class="edit-toggle refresh">{{#if editable}}<i class="fas fa-lock-open"></i>{{else}}<i class="fas fa-lock"></i>{{/if}}</a>
+                    </div>
                 <div class="fieldblock">
                     <div class="label">{{localize "gurps.sheet.miscellaneous.created_date"}}</div>
                     <div class="field">{{data.created_date}}</div>
                     <div class="label">{{localize "gurps.sheet.miscellaneous.modified_date"}}</div>
                     <div class="field">{{data.modified_date}}</div>
                     <div class="label">{{localize "gurps.sheet.miscellaneous.options"}}</div>
-                    <div class="field">NOT YET IMPLEMENTED</div>
+                    <div class="field">{{char_options}}</div>
                 </div>
             </div>
             <div id="description">
@@ -47,7 +50,7 @@
                     <div class="label">{{localize "gurps.sheet.description.weight"}}</div>
                     <div class="field"><input name="data.profile.weight" type="text" value="{{data.profile.weight}}"/></div>
                     <div class="label">{{localize "gurps.sheet.description.SM"}}</div>
-                    <div class="field"><input name="data.profile.SM" type="text" value="{{data.profile.SM}}"/></div>
+                    <div class="field"><input name="data.profile.SM" type="text" value="{{#if (gt data.profile.SM -1)}}+{{/if}}{{data.profile.SM}}" data-dtype="Number"/></div>
                     <div class="label">{{localize "gurps.sheet.description.tech_level"}}</div>
                     <div class="field"><input name="data.profile.tech_level" type="text" value="{{data.profile.tech_level}}"/></div>
                     <div class="label">{{localize "gurps.sheet.description.body_type"}}</div>
@@ -76,7 +79,7 @@
                 <div class="header">{{data.points.total}}{{localize "gurps.sheet.points.total"}}</div>
                 <div class="fieldblock">
                     <div class="field"><input name="data.points.unspent" type="text" value="{{data.points.unspent}}"/></div>
-                    <div class="label">{{localize "gurps.sheet.points.unspent"}}<a class="edit-toggle refresh">{{#if (eq editable true)}}<i class="fas fa-lock-open"></i>{{else}}<i class="fas fa-lock"></i>{{/if}}</a></div>
+                    <div class="label">{{localize "gurps.sheet.points.unspent"}}</div>
                     <div class="field noedit">{{data.points.race}}</div>
                     <div class="label">{{localize "gurps.sheet.points.race"}}</div>
                     <div class="field noedit">{{data.points.attributes}}</div>
@@ -135,7 +138,8 @@
                     {{/each}}
                 </div>
             </div>
-            <div id="encumbrance">
+            <div id="enc-lifts">
+                <div id="encumbrance">
                 <div class="header">{{localize "gurps.sheet.encumbrance.title"}}</div>
                 <div class="encmarkerh header"></div>
                 <div class="ench header">{{localize "gurps.sheet.encumbrance.level.title"}}</div>
@@ -166,6 +170,7 @@
                 <div class="liftdesc">{{localize "gurps.sheet.lifting.carry_on_back"}}</div>
                 <div class="lift">{{data.lifts.shift_slightly}} lb</div>
                 <div class="liftdesc">{{localize "gurps.sheet.lifting.shift_slightly"}}</div>
+            </div>
             </div>
             <div id="location">
                 <div class="header">{{localize "gurps.sheet.hit_location.title"}}</div>
@@ -273,7 +278,7 @@
             <div class="pts header">{{localize "gurps.sheet.advantages.points"}}</div>
             <div class="ref header">{{localize "gurps.sheet.advantages.reference"}}</div>
             {{#each advantages as |item iid|}}
-                {{> "systems/gga/templates/actors/parts/actor-advantage.hbs"  item=item iid=iid}}
+                {{> "systems/gga/templates/actor/parts/actor-advantage.hbs"  item=item iid=iid}}
             {{/each}}
         </div>
         {{/if}}

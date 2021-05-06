@@ -208,6 +208,20 @@
             "winged_hexapod": "Winged Hexapod",
             "winged_quadruped": "Winged Quadruped",
             "winged_vermiform": "Winged Vermiform"
+        },
+        "error": {
+            "invalid_file": "This is not a valid GCS character file!"
+        },
+        "item": {
+            "advantage": "Advantage"
+        },
+        "feature": {
+            "reaction_bonus": {
+                "default": "from others"
+            },
+            "conditional_modifier": {
+                "default": "triggering condition"
+            }
         }
     }
 }
