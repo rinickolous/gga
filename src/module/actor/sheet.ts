@@ -178,51 +178,102 @@ export class GURPSActorSheet extends ActorSheet {
     }
 
     _prepareItems(data: any) {
-        let [advantages, skills, spells, carried_equipment, other_equipment] = data.items.reduce((arr: Array<any>, item: any) => {
+        console.log(data.items);
+        let [advantages, skills, spells, carried_equipment, other_equipment, notes] = data.items.reduce((arr: Array<any>, item: any) => {
             item.img = item.img || DEFAULT_TOKEN;
-            
             if (["advantage_container","advantage","modifier"].includes(item.type)) arr[0].push(item);
             else if (["skill_container","technique","skill"].includes(item.type)) arr[1].push(item);
             else if (["spell_container","ritual_magic_spell","spell"].includes(item.type)) arr[2].push(item);
             else if (["equipment_container","equipment","eqp_modifier"].includes(item.type)) {
-                // console.log(item);
                 if (item.data.other) arr[4].push(item);
                 else arr[3].push(item);
             }
+            else if (["notes_container","notes"].includes(item.type)) arr[5].push(item);
             return arr;
-        }, [[], [], [], [],[]]);
+        }, [[], [], [], [],[],[]]);
+        console.log(carried_equipment);
+        console.log(other_equipment);
         let advantages_formatted = [];
         for (let ad of advantages) if (ad.type !== "modifier") {
-            let ad_val = this._getChildren(ad,advantages);
-            if (!!ad_val) advantages_formatted.push(ad_val);
-            ad.notes = [];
-            if (!!ad.data.notes) ad.notes.push({name:ad.data.notes,notes:""});
-            let mod_val = this._getAdModifiers(ad,advantages);
-            ad.notes = ad.notes.concat(mod_val);
+            ad = this._getChildren(ad,advantages);
+            if (!!ad) advantages_formatted.push(ad);
         }
-
+        let skills_formatted = [];
+        for (let sk of skills) {
+            sk = this._getChildren(sk,skills);
+            if (!!sk) skills_formatted.push(sk);
+        }
+        let spells_formatted = [];
+        for (let sp of spells) {
+            sp = this._getChildren(sp,spells);
+            if (!!sp) spells_formatted.push(sp);
+        }
+        let carried_equipment_formatted = [];
+        for (let eq of carried_equipment) if (eq.type !== "eqp_modifier") {
+            eq = this._getChildren(eq,carried_equipment);
+            if (!!eq) carried_equipment_formatted.push(eq);
+        }
+        let other_equipment_formatted = [];
+        for (let eq of other_equipment)  if (eq.type !== "eqp_modifier") {
+            eq = this._getChildren(eq,other_equipment);
+            if (!!eq) other_equipment_formatted.push(eq);
+        }
+        let notes_formatted = [];
+        for (let n of notes) {
+            n = this._getChildren(n,notes);
+            if (!!n) notes_formatted.push(n);
+        }
         data.advantages = advantages_formatted;
+        data.skills = skills_formatted;
+        data.spells = spells_formatted;
+        data.equipment = carried_equipment_formatted;
+        data.other_equipment = other_equipment_formatted;
+        data.notes = notes_formatted;
     }
 
-    _getChildren(item: { data: { parent: string; children: any; }; indent: number; children: any[]; },list: any[],indent=0) {
+    _getChildren(item: { data: { parent: string; children: string | any[]; modifiers: string | any[]; notes: string;}; indent: number; children: any[]; modifiers: any[]; notes: any[];}, list: any[], indent=0) {
+        console.log(item);
+        if (item.data.parent !== "none" && indent === 0) return null;
         // console.log(item);
-        if (item.data.parent !== "none" && indent === 0) return;
+        let children = [];
+        let modifiers = [];
         item.indent = indent;
-        if (item.data.children) {
-            let children = duplicate(item.data.children);
-            item.children = [];
-            for (let ch of children) {
-                let element = list.find(element => element._id === ch);
-                // console.log(item,ch,list);
-                let item_val = this._getChildren(element,list,item.indent+1);
-                if (!!item_val) item.children.push(item_val);
-            }
+        if (item.data.children?.length) for (let ch of item.data.children) {
+            // console.log(ch);
+            let element = list.find(e => e._id === ch);
+            // console.log(element);
+            let child = this._getChildren(element,list,item.indent+1);
+            if (!!child) children.push(child);
         }
-        // console.log(item.name,item.data.parent);
-        if (item.data.parent === "none" || item.indent !== 0) {
-            return item;
+        if (item.data.modifiers?.length) for (let m of item.data.modifiers) {
+            let mod = list.find(e => e._id === m);
+            // console.log(mod);
+            if (!mod?.data.disabled) modifiers.push({name:mod.name,notes:mod.data.notes});
         }
+        if (item.data.children) item.children = children;
+        if (item.data.modifiers) item.modifiers = modifiers;
+        if (item.data.parent === "none" || item.indent !== 0) return item;
     }
+
+    // _getChildren(item: { data: { parent: string; children: any; }; indent: number; children: any[]; },list: any[],indent=0) {
+    //     // console.log(item);
+    //     if (item.data.parent !== "none" && indent === 0) return;
+    //     item.indent = indent;
+    //     if (item.data.children) {
+    //         let children = duplicate(item.data.children);
+    //         item.children = [];
+    //         for (let ch of children) {
+    //             let element = list.find(element => element._id === ch);
+    //             // console.log(item,ch,list);
+    //             let item_val = this._getChildren(element,list,item.indent+1);
+    //             if (!!item_val) item.children.push(item_val);
+    //         }
+    //     }
+    //     // console.log(item.name,item.data.parent);
+    //     if (item.data.parent === "none" || item.indent !== 0) {
+    //         return item;
+    //     }
+    // }
 
     _getAdModifiers(item: { data: { modifiers: string | any[]; }; },list: any[]) {
         let mods = []

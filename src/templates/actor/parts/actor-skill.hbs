@@ -1,0 +1,21 @@
+<div class="item entry desc" style="padding-left: {{item.indent}}.2em;" data-item-id="{{#if section.editableName}}{{iid}}{{else}}{{item._id}}{{/if}}"{{#unless this.data.enabled}} disabled{{/unless}}>
+    {{#if (eq item.type "skill_container")}}
+    {{#if item.data.open}}
+    <i class="fas fa-caret-down expandcollapseicon"></i>
+    {{else}}
+    <i class="fas fa-caret-right expandcollapseicon"></i>
+    {{/if}}
+    {{/if}}
+    {{item.name}}{{#if item.data.tech_level_enabled}}/TL{{item.data.tech_level}}{{/if}}{{#if item.data.specialization}} ({{item.data.specialization}}){{/if}}{{#if item.data.tl_enabled}}/TL{{item.data.tl}}{{/if}}
+    {{!-- {{#if (eq item.data.defaulted_from.type "Skill")}}<div class="list_note">Default: {{item.data.defaulted_from.name}}{{#if item.data.defaulted_from.specialization}} ({{item.data.defaulted_from.specialization}}){{/if}} {{item.data.defaulted_from.modifier}}</div>{{/if}} --}}
+    {{#if item.data.notes}}<div class="list_note">{{item.data.notes}}</div>{{/if}}
+</div>
+<div class="entry sl">{{item.data.calc.level}}</div>
+<div class="entry rsl">{{item.data.calc.rsl}}</div>
+<div class="entry pts">{{item.data.points}}</div>
+<div class="entry ref">{{item.data.reference}}</div>
+{{#if (and item.data.children item.data.open)}}
+    {{#each item.children as |item iid|}}
+        {{> "systems/gga/templates/actor/parts/actor-skill.hbs" item=item iid=iid}}
+    {{/each}}
+{{/if}}

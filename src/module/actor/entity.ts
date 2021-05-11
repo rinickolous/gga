@@ -1,7 +1,14 @@
 import {GURPS} from "../config"
+import { GURPSItem } from "../item/entity";
 
 /** @extends { Actor } */
 export class GURPSActor extends Actor {
+
+    /** @override */
+    async update(data: Data, options: Options= {}) {
+        console.log("update data",data);
+        return super.update(data,options);
+    }
 
     /** @override */
     prepareBaseData() {
@@ -16,7 +23,7 @@ export class GURPSActor extends Actor {
         this._applyFeatures(actorData);
         for (let i of actorData.items) {
             if (i.data.parent !== "none" && i.data.parent.includes("-")) {
-                i.data.parent = this.data.items.find(e => e.data.id === i.data.parent)._id;
+                i.data.parent = this.data.items.find(e => e.data.id === i.data.parent)?._id;
             }
             if (i.data.children && i.data.children.length) {
                 for (let c = 0; c < i.data.children.length; c++) {
@@ -74,9 +81,9 @@ export class GURPSActor extends Actor {
             ui.notifications.error(game.i18n.localize("gurps.error.invalid_file"));
             return;
         }
-        let commit = {};
+        let commit: Data;
         console.log("Importing '"+j.profile.name+"'");
-        commit = { ...commit, ...{"name": j.profile.name, "token.name": j.profile.name, "data": {created_date: j.created_date, modified_date: j.modified_date}}};
+        commit = { ...commit, ...{"name": j.profile.name, "token.name": j.profile.name, "data.created_date": j.created_date, "data.modified_date": j.modified_date}};
         commit = { ...commit, ...{
             "data.profile": {
                 player_name: j.profile.player_name || "",
@@ -111,9 +118,21 @@ export class GURPSActor extends Actor {
     }
 
     _importItems(j: any) {
-        let items: Array<Object> = [];
+        let items: Array<any> = [];
         if (j.advantages) for (let ad of j.advantages) {
             items = this._parseAdvantage(items,ad);
+        }
+        if (j.skills) for (let sk of j.skills) {
+            items = this._parseSkill(items,sk);
+        }
+        if (j.spells) for (let sp of j.spells) {
+            items = this._parseSpell(items,sp);
+        }
+        if (j.equipment) for (let eq of j.equipment) {
+            items = this._parseEquipment(items,eq,false);
+        }
+        if (j.other_equipment) for (let eq of j.other_equipment) {
+            items = this._parseEquipment(items,eq,true);
         }
         return items;
     }
@@ -158,7 +177,7 @@ export class GURPSActor extends Actor {
         } else if (ad.type === "advantage_container") {
             item = {
                 type: "advantage_container",
-                name: ad.name || game.i18n.localize("gurps.item.advantage"),
+                name: ad.name || game.i18n.localize("gurps.item.advantage_container"),
                 data: {
                     parent: parent,
                     id: ad.id || "",
@@ -187,6 +206,7 @@ export class GURPSActor extends Actor {
             items = this._parseAdvantageModifier(items,m,ad.id);
             item.data.modifiers.push(m.id);
         }
+        console.log(item);
         items.push(item);
         return items;
     }
@@ -194,22 +214,313 @@ export class GURPSActor extends Actor {
     _parseAdvantageModifier(items: Array<any>, m: any, parent="none") {
         let item;
         item = {
-            type: m.type || "modifier",
-            name: m.name || "Modifier",
+            type: "modifier",
+            name: m.name || game.i18n.localize("gurps.item.modifier"),
             data: {
-                version: m.version || 1,
                 id: m.id || "",
-                disabled: m.disabled || false,
+                based_on_id: m.based_on_id || "",
+                based_on_hash: m.based_on_hash || "",
                 reference: m.reference || "",
+                notes: m.notes || "",
+                userdesc: m.userdesc || "",
+                categories: m.categories || [],
+                parent: parent,
+                disabled: m.disabled || false,
                 cost_type: m.cost_type || "percentage",
                 cost: m.cost || 0,
                 affects: m.affects || "total",
                 features: this._parseFeatures(m.features) || [],
-                notes: m.notes || "",
-                levels: m.levels || 0,
-                parent: parent
+                levels: m.levels || 0
             }
         }
+        console.log(item);
+        items.push(item);
+        return items;
+    }
+
+    _parseSkill(items: Array<any>, sk: any, parent="none") {
+        let item;
+        if (sk.type === "skill") {
+            item = {
+                type: "skill",
+                name: sk.name || game.i18n.localize("gurps.item.skill"),
+                data: {
+                    id: sk.id || "",
+                    based_on_id: sk.based_on_id || "",
+                    based_on_hash: sk.based_on_hash || "",
+                    reference: sk.reference || "",
+                    notes: sk.notes || "",
+                    userdesc: sk.userdesc || "",
+                    categories: sk.categories || [],
+                    parent: parent,
+                    prereqs: sk.prereqs || GURPS.default_prereq,
+                    specialization: sk.specialization || "",
+                    tech_level: sk.tech_level || "",
+                    difficulty: sk.difficulty || "dx/a",
+                    encumbrance_penalty_multiplier: sk.encumbrance_penalty_multiplier || 0,
+                    points: sk.points || 1,
+                    defaults: sk.defaults || [],
+                    defaulted_from: sk.defaulted_from || {},
+                    features: this._parseFeatures(sk.features) || [],
+                    weapons: this._parseWeapons(sk.weapons) || [],
+                    calc: {
+                        level: sk.calc.level || 0,
+                        rsl: sk.calc.rsl || "",
+                    }
+                }
+            }
+        } else if (sk.type === "technique") {
+            item = {
+                type: "technique",
+                name: sk.name || game.i18n.localize("gurps.item.technique"),
+                data: {
+                    id: sk.id || "",
+                    based_on_id: sk.based_on_id || "",
+                    based_on_hash: sk.based_on_hash || "",
+                    reference: sk.reference || "",
+                    notes: sk.notes || "",
+                    userdesc: sk.userdesc || "",
+                    categories: sk.categories || [],
+                    parent: parent,
+                    difficulty: sk.difficulty || "A",
+                    points: sk.points || 1,
+                    weapons: this._parseWeapons(sk.weapons) || [],
+                    limit: sk.limit || 0,
+                    default: {
+                        type: sk.default.type || "skill",
+                        name: sk.default.name || "",
+                        specialization: sk.default.specialization || "",
+                        modifier: sk.default.modifier || 0,
+                    },
+                    prereqs: sk.prereqs || GURPS.default_prereq,
+                    features: this._parseFeatures(sk.features) || [],
+                    calc: {
+                        level: sk.calc.level || 0,
+                        rsl: sk.calc.rsl || "",
+                    }
+                }
+            }
+        } else if (sk.type === "skill_container") {
+            item = {
+                type: "skill_container",
+                name: sk.name || game.i18n.localize("gurps.item.skill_container"),
+                data: {
+                    id: sk.id || "",
+                    based_on_id: sk.based_on_id || "",
+                    based_on_hash: sk.based_on_hash || "",
+                    reference: sk.reference || "",
+                    notes: sk.notes || "",
+                    userdesc: sk.userdesc || "",
+                    categories: sk.categories || [],
+                    parent: parent,
+                    open: sk.open || false,
+                    children: []
+                }
+            }
+            if (sk.children && sk.children.length) for (let ch of sk.children) {
+                items = this._parseSkill(items,ch,sk.id);
+                item.data.children.push(ch.id);
+            }
+        }
+        console.log(item);
+        items.push(item);
+        return items;
+    }
+
+    _parseSpell(items: Array<any>, sp: any, parent="none") {
+        let item;
+        if (sp.type === "spell") {
+            item = {
+                type: "spell",
+                name: sp.name || game.i18n.localize("gurps.item.spell"),
+                data: {
+                    id: sp.id || "",
+                    based_on_id: sp.based_on_id || "",
+                    based_on_hash: sp.based_on_hash || "",
+                    reference: sp.reference || "",
+                    notes: sp.notes || "",
+                    userdesc: sp.userdesc || "",
+                    categories: sp.categories || [],
+                    parent: parent,
+                    prereqs: sp.prereqs || GURPS.default_prereq,
+                    college: sp.college || [],
+                    spell_class: sp.spell_class || "",
+                    casting_cost: sp.casting_cost || "",
+                    maintenance_cost: sp.maintenance_cost || "",
+                    resist: sp.resist || "",
+                    casting_time: sp.casting_time || "",
+                    duration: sp.duration || "",
+                    difficulty: sp.difficulty || "iq/h",
+                    power_source: sp.power_source || "",
+                    points: !!sp.points ? sp.points : 1,
+                    calc: {
+                        level: sp.calc.level || 0,
+                        rsl: sp.calc.rsl || "",
+                    },
+                    tech_level: sp.tech_level || "",
+                    weapons: this._parseWeapons(sp.weapons) || [],
+                }
+            }
+        } else if (sp.type === "ritual_magic_spell") {
+            item = {
+                type: "ritual_magic_spell",
+                name: sp.name || game.i18n.localize("gurps.item.spell"),
+                data: {
+                    id: sp.id || "",
+                    based_on_id: sp.based_on_id || "",
+                    based_on_hash: sp.based_on_hash || "",
+                    reference: sp.reference || "",
+                    notes: sp.notes || "",
+                    userdesc: sp.userdesc || "",
+                    categories: sp.categories || [],
+                    parent: parent,
+                    base_skill: sp.base_skill || "",
+                    prereq_count: sp.prereq_count || 0,
+                    prereqs: sp.prereqs || GURPS.default_prereq,
+                    college: sp.college || [],
+                    spell_class: sp.spell_class || "",
+                    casting_cost: sp.casting_cost || "",
+                    maintenance_cost: sp.maintenance_cost || "",
+                    resist: sp.resist || "",
+                    casting_time: sp.casting_time || "",
+                    duration: sp.duration || "",
+                    difficulty: sp.difficulty || "iq/h",
+                    power_source: sp.power_source || "",
+                    points: !!sp.points ? sp.points : 1,
+                    calc: {
+                        level: sp.calc.level || 0,
+                        rsl: sp.calc.rsl || "",
+                    },
+                    tech_level: sp.tech_level || "",
+                    weapons: this._parseWeapons(sp.weapons) || [],
+                }
+            }
+        } else if (sp.type === "spell_container") {
+            item = {
+                type: "spell_container",
+                name: sp.name || game.i18n.localize("gurps.item.spell_container"),
+                data: {
+                    id: sp.id || "",
+                    based_on_id: sp.based_on_id || "",
+                    based_on_hash: sp.based_on_hash || "",
+                    reference: sp.reference || "",
+                    notes: sp.notes || "",
+                    userdesc: sp.userdesc || "",
+                    categories: sp.categories || [],
+                    parent: parent,
+                    open: sp.open || false,
+                    children: []
+                }
+            }
+            if (sp.children && sp.children.length) for (let ch of sp.children) {
+                items = this._parseSpell(items,ch,sp.id);
+                item.data.children.push(ch.id);
+            }
+        }
+        console.log(item);
+        items.push(item);
+        return items;
+    }
+
+    _parseEquipment(items: Array<any>, eq: any, other: boolean, parent="none") {
+        let item;
+        if (eq.type === "equipment") {
+            item = {
+                type: "equipment",
+                name: eq.description || game.i18n.localize("gurps.item.equipment"),
+                data: {
+                    id: eq.id || "",
+                    based_on_id: eq.based_on_id || "",
+                    based_on_hash: eq.based_on_hash || "",
+                    reference: eq.reference || "",
+                    notes: eq.notes || "",
+                    userdesc: eq.userdesc || "",
+                    categories: eq.categories || [],
+                    parent: parent,
+                    prereqs: eq.prereqs || GURPS.default_prereq,
+                    other: other,
+                    quantity: eq.quantity || 1,
+                    value: eq.value || "",
+                    ignore_weight_for_skills: eq.ignore_weight_for_skills || false,
+                    weight: eq.weight || "",
+                    tech_level: eq.tech_level || "",
+                    legality_class: eq.legality_class || "",
+                    equipped: !!eq.equipped ? eq.equipped : true,
+                    uses: eq.uses || 0,
+                    max_uses: eq.max_uses || 0,
+                    weapons: this._parseWeapons(eq.weapons) || [],
+                    features: this._parseFeatures(eq.features) || [],
+                    modifiers: []
+                }
+            }
+        } else if (eq.type === "equipment_container") {
+            item = {
+                type: "equipment_container",
+                name: eq.description || game.i18n.localize("gurps.item.equipment_container"),
+                data: {
+                    id: eq.id || "",
+                    based_on_id: eq.based_on_id || "",
+                    based_on_hash: eq.based_on_hash || "",
+                    reference: eq.reference || "",
+                    notes: eq.notes || "",
+                    userdesc: eq.userdesc || "",
+                    categories: eq.categories || [],
+                    parent: parent,
+                    prereqs: eq.prereqs || GURPS.default_prereq,
+                    other: other,
+                    quantity: eq.quantity || 1,
+                    value: eq.value || "",
+                    ignore_weight_for_skills: eq.ignore_weight_for_skills || false,
+                    weight: eq.weight || "",
+                    tech_level: eq.tech_level || "",
+                    legality_class: eq.legality_class || "",
+                    equipped: !!eq.equipped ? eq.equipped : true,
+                    uses: eq.uses || 0,
+                    max_uses: eq.max_uses || 0,
+                    weapons: this._parseWeapons(eq.weapons) || [],
+                    features: this._parseFeatures(eq.features) || [],
+                    modifiers: [],
+                    children: []
+                }
+            }
+            if (eq.children && eq.children.length) for (let ch of eq.children) {
+                items = this._parseEquipment(items,ch,eq.id);
+                item.data.children.push(ch.id);
+            }
+        }
+        if (eq.modifiers && eq.modifiers.length) for (let m of eq.modifiers) {
+            items = this._parseEquipmentModifier(items,m,other,eq.id);
+            item.data.modifiers.push(m.id);
+        }
+        console.log(item);
+        items.push(item);
+        return items;
+    }
+
+    _parseEquipmentModifier(items: Array<any>, m: any, other: boolean, parent="none") {
+        let item;
+        item = {
+            type: "eqp_modifier",
+            name: m.name || game.i18n.localize("gurps.item.eqp_modifier"),
+            data: {
+                id: m.id || "",
+                based_on_id: m.based_on_id || "",
+                based_on_hash: m.based_on_hash || "",
+                reference: m.reference || "",
+                notes: m.notes || "",
+                userdesc: m.userdesc || "",
+                categories: m.categories || [],
+                parent: parent,
+                disabled: m.disabled || false,
+                cost_type: m.cost_type || "to_original_cost",
+                cost: m.cost || "+0",
+                weight_type: m.weight_type || "to_original_weight",
+                weight: m.weight || "+0 lb",
+                features: this._parseFeatures(m.features) || [],
+                other: other
+            }
+        }
+        console.log(item);
         items.push(item);
         return items;
     }

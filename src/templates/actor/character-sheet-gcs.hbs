@@ -276,7 +276,7 @@
         <div id="advantages" class="item-list">
             <div class="desc header">{{localize "gurps.sheet.advantages.desc"}}</div>
             <div class="pts header">{{localize "gurps.sheet.advantages.points"}}</div>
-            <div class="ref header">{{localize "gurps.sheet.advantages.reference"}}</div>
+            <div class="ref header"><i class="fas fa-bookmark"></i></div>
             {{#each advantages as |item iid|}}
                 {{> "systems/gga/templates/actor/parts/actor-advantage.hbs"  item=item iid=iid}}
             {{/each}}
@@ -288,9 +288,9 @@
             <div class="sl header">{{localize "gurps.sheet.skills.sl"}}</div>
             <div class="rsl header">{{localize "gurps.sheet.skills.rsl"}}</div>
             <div class="pts header">{{localize "gurps.sheet.skills.points"}}</div>
-            <div class="ref header">{{localize "gurps.sheet.skills.reference"}}</div>
+            <div class="ref header"><i class="fas fa-bookmark"></i></div>
             {{#each skills as |item iid|}}
-                {{> "systems/gga/templates/actors/parts/actor-skill.hbs"  item=item iid=iid}}
+                {{> "systems/gga/templates/actor/parts/actor-skill.hbs"  item=item iid=iid}}
             {{/each}}
         </div>
         {{/if}}
@@ -307,41 +307,41 @@
             <div class="sl header">{{localize "gurps.sheet.spells.sl"}}</div>
             <div class="rsl header">{{localize "gurps.sheet.spells.rsl"}}</div>
             <div class="pts header">{{localize "gurps.sheet.spells.points"}}</div>
-            <div class="ref header">{{localize "gurps.sheet.spells.reference"}}</div>
+            <div class="ref header"><i class="fas fa-bookmark"></i></div>
             {{#each spells as |item iid|}}
-                {{> "systems/gga/templates/actors/parts/actor-spell.hbs"  item=item iid=iid}}
+                {{> "systems/gga/templates/actor/parts/actor-spell.hbs"  item=item iid=iid}}
             {{/each}}
         </div>
         {{/if}}
         {{#if (gt equipment.length 0)}}
         <div id="equipment" class="item-list">
-            <div class="equipped header">{{localize "gurps.sheet.equipment.equipped"}}</div>
-            <div class="qty header">{{localize "gurps.sheet.equipment.qty"}}</div>
+            <div class="equipped header"><i class="fas fa-check-circle"></i></div>
+            <div class="qty header"><i class="fab fa-slack-hash"></i></div>
             <div class="desc header">{{localize "gurps.sheet.equipment.desc"}}</div>
-            <div class="cost header">{{localize "gurps.sheet.equipment.cost"}}</div>
-            <div class="weight header">{{localize "gurps.sheet.equipment.weight"}}</div>
-            <div class="sum_cost header">{{localize "gurps.sheet.equipment.sum_cost"}}</div>
-            <div class="sum_weight header">{{localize "gurps.sheet.equipment.sum_weight"}}</div>
-            <div class="ref header">{{localize "gurps.sheet.equipment.reference"}}</div>
+            <div class="cost header"><i class="fas fa-dollar-sign"></i></div>
+            <div class="weight header"><i class="fas fa-weight-hanging"></i></div>
+            <div class="sum_cost header"><i class="fas fa-layer-group"><i class="fas fa-dollar-sign"></i></i></div>
+            <div class="sum_weight header"><i class="fas fa-layer-group"></i><i class="fas fa-weight-hanging"></i></div>
+            <div class="ref header"><i class="fas fa-bookmark"></i></div>
 
             {{#each equipment as |item iid|}}
-                {{> "systems/gga/templates/actors/parts/actor-equipment.hbs"  item=item iid=iid}}
+                {{> "systems/gga/templates/actor/parts/actor-equipment.hbs"  item=item iid=iid}}
             {{/each}}
             
         </div>
         {{/if}}
         {{#if (gt other_equipment.length 0)}}
         <div id="other_equipment" class="item-list">
-            <div class="qty header">{{localize "gurps.sheet.other_equipment.qty"}}</div>
+            <div class="qty header"><i class="fab fa-slack-hash"></i></div>
             <div class="desc header">{{localize "gurps.sheet.other_equipment.desc"}}</div>
-            <div class="cost header">{{localize "gurps.sheet.other_equipment.cost"}}</div>
-            <div class="weight header">{{localize "gurps.sheet.other_equipment.weight"}}</div>
-            <div class="sum_cost header">{{localize "gurps.sheet.other_equipment.sum_cost"}}</div>
-            <div class="sum_weight header">{{localize "gurps.sheet.other_equipment.sum_weight"}}</div>
-            <div class="ref header">{{localize "gurps.sheet.other_equipment.reference"}}</div>
+            <div class="cost header"><i class="fas fa-dollar-sign"></i></div>
+            <div class="weight header"><i class="fas fa-weight-hanging"></i></div>
+            <div class="sum_cost header"><i class="fas fa-layer-group"><i class="fas fa-dollar-sign"></i></i></div>
+            <div class="sum_weight header"><i class="fas fa-layer-group"></i><i class="fas fa-weight-hanging"></i></div>
+            <div class="ref header"><i class="fas fa-bookmark"></i></div>
 
             {{#each other_equipment as |item iid|}}
-                {{> "systems/gga/templates/actors/parts/actor-equipment.hbs"  item=item iid=iid}}
+                {{> "systems/gga/templates/actor/parts/actor-equipment.hbs"  item=item iid=iid}}
             {{/each}}
             
         </div>
@@ -349,10 +349,10 @@
         {{#if (gt notes.length 0)}}
         <div id="notes" class="item-list">
             <div class="desc header">{{localize "gurps.sheet.notes.desc"}}</div>
-            <div class="ref header">{{localize "gurps.sheet.notes.reference"}}</div>
+            <div class="ref header"><i class="fas fa-bookmark"></i></div>
 
             {{#each notes as |item iid|}}
-                {{> "systems/gga/templates/actors/parts/actor-notes.hbs" item=item iid=iid}}
+                {{> "systems/gga/templates/actor/parts/actor-notes.hbs" item=item iid=iid}}
             {{/each}}
         </div>
         {{/if}}

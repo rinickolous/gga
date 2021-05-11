@@ -46,6 +46,13 @@ Hooks.once('init', async () => {
     return outStr;
   });
 
+  Handlebars.registerHelper('or', function () {
+    for (const arg in arguments) {
+      if (arg) return true;
+    }
+    return false;
+  });
+
   // Register custom sheets (if any)
   Items.unregisterSheet('core', ItemSheet);
   Items.registerSheet('gurps', GURPSItemSheet, { makeDefault: true });

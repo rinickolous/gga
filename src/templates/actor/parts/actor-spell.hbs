@@ -1,0 +1,27 @@
+<div class="item desc" style="padding-left: {{item.indent}}.2em;" data-item-id="{{#if section.editableName}}{{iid}}{{else}}{{item._id}}{{/if}}"{{#unless this.data.enabled}} disabled{{/unless}}>
+    {{#if (eq item.type "spell_container")}}
+    {{#if item.data.open}}
+    <i class="fas fa-caret-down expandcollapseicon"></i>
+    {{else}}
+    <i class="fas fa-caret-right expandcollapseicon"></i>
+    {{/if}}
+    {{/if}}
+    {{item.name}}{{#if item.data.tl_enabled}}/TL{{item.data.tl}}{{/if}}
+    {{#if item.data.notes}}<div class="list_note">{{item.data.notes}}</div>{{/if}}
+</div>
+<div class="resist">{{this.data.resist}}</div>
+<div class="class">{{this.data.spell_class}}</div>
+<div class="college">{{this.data.college}}</div>
+<div class="cost">{{this.data.casting_cost}}</div>
+<div class="maintain">{{this.data.maintenance_cost}}</div>
+<div class="time">{{this.data.casting_time}}</div>
+<div class="duration">{{this.data.duration}}</div>
+<div class="sl">{{this.data.level.sl}}</div>
+<div class="rsl">{{this.data.level.rsl}}</div>
+<div class="pts">{{this.data.points.total}}</div>
+<div class="ref">{{this.data.reference}}</div>
+{{#if (and (eq item.type "spell_container") item.data.open)}}
+    {{#each item.children as |item iid|}}
+        {{> "systems/gga/templates/actor/parts/actor-spell.hbs" item=item iid=iid}}
+    {{/each}}
+{{/if}}

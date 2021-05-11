@@ -213,7 +213,16 @@
             "invalid_file": "This is not a valid GCS character file!"
         },
         "item": {
-            "advantage": "Advantage"
+            "advantage": "Advantage",
+            "advantage_container": "Advantage Container",
+            "skill": "Skill",
+            "technique": "Technique",
+            "skill_container": "Skill Container",
+            "spell": "Spell",
+            "spell_container": "Spell Container",
+            "ritual_magic_spell": "Spell",
+            "equipment": "Equipment",
+            "equipment_container": "Equipment"
         },
         "feature": {
             "reaction_bonus": {
@@ -222,6 +231,47 @@
             "conditional_modifier": {
                 "default": "triggering condition"
             }
+        },
+        "location": {
+            "eyes": "Eyes",
+            "skull": "Skull",
+            "face": "Face",
+            "right_leg": "Right Leg",
+            "right_arm": "Right Arm",
+            "torso": "Torso",
+            "groin": "Groin",
+            "left_arm": "Left Arm",
+            "left_leg": "Left Leg",
+            "hand": "Hand",
+            "feet": "Foot",
+            "neck": "Neck",
+            "vitals": "Vitals",
+            "fin": "Fin",
+            "tail": "Tail",
+            "arm": "Arms",
+            "arms_1_2": "Arms 1-2",
+            "arms_3_4": "Arms 3-4",
+            "arms_5_6": "Arms 5-6",
+            "arms_7_8": "Arms 7-8",
+            "legs_1_2": "Legs 1-2",
+            "legs_3_4": "Legs 3-4",
+            "legs_5_6": "Legs 5-6",
+            "legs_7_8": "Legs 7-8",
+            "wing": "Wing",
+            "leg": "Leg",
+            "foreleg": "Foreleg",
+            "hindleg": "Hindleg",
+            "midleg": "Midleg",
+            "extremity": "Extremity",
+            "brain": "Brain"
+        },
+        "cr": {
+            "-1": "None Required",
+            "15": "CR: 15 (Resist Almost All The Time)",
+            "12": "CR: 12 (Resist Quite Often)",
+            "9": "CR: 9 (Resist Fairly Often)",
+            "6": "CR: 6 (Resist Rarely)",
+            "0": "CR: N/A (Cannot Resist)"
         }
     }
 }

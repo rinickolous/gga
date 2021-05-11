@@ -300,9 +300,10 @@
         "height": "",
         "weight": "",
         "gender": "",
-        "body_type": "",
+        "body_type": "humanoid",
         "tech_level": "",
-        "religiion": ""
+        "religiion": "",
+        "SM": 0
       },
       "attributes": [
         {
@@ -578,6 +579,8 @@
     "templates": {
         "common": {
             "id": "",
+            "based_on_id": "",
+            "based_on_hash": "",
             "reference": "",
             "notes": "",
             "userdesc": "",
@@ -639,7 +642,7 @@
         "specialization": "",
         "tech_level": null,
         "difficulty": "dx/a",
-        "enc_penalty": 0,
+        "encumbrance_penalty_multiplier": 0,
         "points": 0,
         "calc": {
             "level": 0,
@@ -647,8 +650,7 @@
         },
         "defaults": [],
         "features": [],
-        "weapons": [],
-        "weapon_bonus": []
+        "weapons": []
     },
     "skill_container": {
         "templates": ["common","container"]
@@ -669,8 +671,7 @@
             "modifier": 0
         },
         "features": [],
-        "weapons": [],
-        "weapon_bonus": []
+        "weapons": []
     },
     "spell": {
         "templates": ["common","prereqs"],
@@ -718,8 +719,9 @@
     "equipment": {
         "templates": ["common","prereqs"],
         "quantity": 1,
-        "value": 0,
-        "weight": 0,
+        "value": "",
+        "ignore_weight_for_skills": false,
+        "weight": "",
         "tech_level": "",
         "legality_class": "",
         "equipped": true,
@@ -756,7 +758,7 @@
     },
     "modifier": {
         "templates": ["common"],
-        "enabled": true,
+        "disabled": false,
         "cost_type": "percentage",
         "levels": 1,
         "affects": "total",
@@ -764,7 +766,7 @@
     },
     "eqp_modifier": {
         "templates": ["common"],
-        "enabled": true,
+        "disabled": false,
         "cost_type": "to_original_cost",
         "cost": "+0",
         "weight_type": "to_original_weight",

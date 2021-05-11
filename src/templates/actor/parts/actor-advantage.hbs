@@ -7,10 +7,15 @@
     {{/if}}
     {{/if}}
     {{item.name}}{{#if this.data.levels}} {{item.data.levels}}{{/if}}
-    {{#if (gt item.data.cr -1)}}
-    <div class="list_note">{{localize (concat "gurps.advantage.cr." item.data.cr)}}</div>
+    {{#if (or (gt item.data.cr -1) item.data.notes)}}
+    <div class="list_note">
+        {{#if (gt item.data.cr -1)}}{{localize (concat "gurps.cr." item.data.cr)}}{{#if item.modifiers}}; {{/if}}{{/if}}
+        {{#each item.modifiers}}{{#if (gt @index 0)}}; {{/if}}{{this.name}}{{#if this.notes}} ({{this.notes}}){{/if}}{{/each}}
+    </div>
     {{/if}}
-    {{#if item.notes}}<div class="list_note">{{#each item.notes}}{{#if (gt @index 0)}}; {{/if}}{{this.name}}{{#if this.notes}} ({{this.notes}}){{/if}}{{/each}}</div>{{/if}}
+    {{#if item.data.notes}}
+    <div class="list_note">{{item.data.notes}}</div>
+    {{/if}}
 </div>
 <div class="entry pts">{{item.data.calc.points}}</div>
 <div class="entry ref">{{item.data.reference}}</div>
